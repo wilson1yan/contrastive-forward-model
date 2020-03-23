@@ -3,7 +3,7 @@
 This is code to reproduce experiments for the paper [Learning Predictive Representations for Deformable Objects Using Contrastive Estimation](https://arxiv.org/abs/2003.05436).
 
 ## Installation
-This project was run using Python 3.7.6 with PyTorch 1.4.0. You will also need to install a [custom dm_control package](https://github.com/wilson1yan/dm_control/tree/cfm) with the relevant rope and cloth environments. 
+This project was run using Python 3.7.6 with PyTorch 1.4.0. You will also need to install a [custom dm_control package](https://github.com/wilson1yan/dm_control/tree/cfm) with the relevant rope and cloth environments. Note that you **must** use the **cfm** branch in the custom dm_control repo.
 
 You will also need to install the repo as a pip package: `cd contrastive-forward-model; pip install -e .`
 
