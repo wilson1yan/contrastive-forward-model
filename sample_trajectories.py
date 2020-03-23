@@ -63,13 +63,13 @@ if __name__ == '__main__':
     parser.add_argument('--n_samples', type=int, default=200000,
                         help='Number of simulation samples (i.e. observations / transitions) to collect')
     parser.add_argument('--traj_length', type=int, default=10, help='Trajectory length for each episode')
+    parser.add_argument('--name', type=str, default='rope', help='Folder name to store trajectories in')
     args = parser.parse_args()
 
     assert args.domain in ['rope', 'cloth'], f'Invalid domain: {args.domain}'
 
     start = time.time()
-    name = f'{args.domain}_dr_{args.use_dr}'
-    root = join('data', name)
+    root = join('data', args.name)
     if not exists(root):
         os.makedirs(root)
 
