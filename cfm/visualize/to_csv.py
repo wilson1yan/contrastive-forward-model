@@ -7,7 +7,7 @@ import sys
 roots = sys.argv[1:]
 metrics = ['xor', 'iou', 'geom']
 for root in roots:
-    folders = glob.glob(join(root, 'eval', '*'))
+    folders = glob.glob(join(root,'*', 'eval', '*'))
     for folder in folders:
         with open(join(folder, 'eval_results.json'), 'r') as f:
             results = json.load(f)
