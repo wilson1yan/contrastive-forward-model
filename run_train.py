@@ -34,10 +34,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     exps = [
-            dict(trans_type=['reparam_w_tanh'], batch_size=[128], optimizer=['adam'],
+            dict(trans_type=['reparam_w_tanh'], batch_size=[128],
                  lr=[1e-3], weight_decay=[1e-6], z_dim=[8]),
             dict(seed=[0, 1, 2, 3]),
-            dict(root=['data/rope_flat_False_dr_False']),
+            dict(root=['data/rope']),
             ]
 
     exps = construct_variants(exps)

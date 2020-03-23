@@ -13,7 +13,7 @@ from torchvision.datasets.folder import default_loader
 class PlanetDataset(data.Dataset):
     def __init__(self, root, chunk_size, transform=None):
         self.root = root
-        with open(join(root, 'pos_neg_pairs.pkl'), 'rb') as f:
+        with open(join(root, 'pos_neg_pairs_1.pkl'), 'rb') as f:
             data = pkl.load(f)
         self.image_paths = data['all_images']
 
@@ -137,7 +137,7 @@ class ImageDataset(data.Dataset):
         self.loader = loader
         self.transform = transform
 
-        with open(join(root, 'pos_neg_pairs.pkl'), 'rb') as f:
+        with open(join(root, 'pos_neg_pairs_1.pkl'), 'rb') as f:
             data = pkl.load(f)
         self.image_paths = data['all_images']
 
@@ -174,7 +174,7 @@ class TrajectoryDataset(data.Dataset):
     def __init__(self, root):
         super().__init__()
         self.root = root
-        with open(join(root, 'pos_neg_pairs.pkl'), 'rb') as f:
+        with open(join(root, 'pos_neg_pairs_1.pkl'), 'rb') as f:
             data = pkl.load(f)
         self.image_paths = data['all_images']
         self.images = h5py.File(join(root, 'images.hdf5'), 'r')['images']

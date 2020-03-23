@@ -1,9 +1,12 @@
 import argparse
 import json
+import os
 from os.path import join, exists
 
 import numpy as np
+from tqdm import tqdm
 
+import torch
 import torch.nn.functional as F
 import torch.nn as nn
 import torch.utils.data as data
@@ -119,7 +122,7 @@ def main():
 
     device = torch.device('cuda')
 
-    encoder = cm.Encoder(args.z_dim, obs_dim[0], squash=args.squash).to(device)
+    encoder = cm.Encoder(args.z_dim, obs_dim[0]).to(device)
     trans = cm.Transition(args.z_dim, action_dim, trans_type=args.trans_type).to(device)
     parameters = list(encoder.parameters()) + list(trans.parameters())
     optimizer = optim.Adam(parameters, lr=args.lr, weight_decay=args.weight_decay)
@@ -134,7 +137,7 @@ def main():
 
     # Save example training images
     batch = next(iter(train_loader))
-    obs, obs_next, _, obs_neg = batch
+    obs, obs_next, _ = batch
     imgs = torch.stack((obs, obs_next), dim=1).view(-1, *obs.shape[1:])
     cu.save_image(imgs * 0.5 + 0.5, join(folder_name, 'train_seq_img.png'), nrow=8)
 
@@ -181,7 +184,7 @@ if __name__ == '__main__':
     # Learning Parameters
     parser.add_argument('--lr', type=float, default=1e-3, help='base learning rate for batch size 128 (default: 1e-3)')
     parser.add_argument('--weight_decay', type=float, default=0, help='default 0')
-    parser.add_argument('--epochs', type=int, default=50, help='default: 50')
+    parser.add_argument('--epochs', type=int, default=30, help='default: 50')
     parser.add_argument('--log_interval', type=int, default=1, help='default: 1')
     parser.add_argument('--load_checkpoint', action='store_true')
 

@@ -25,7 +25,7 @@ class AttrDict(dict):
         self.__dict__ = self
 
 def get_dataloader(params):
-    dset = TrajectoryDataset(root=join(params['root'], 'train_data'), transform=transforms.ToTensor())
+    dset = TrajectoryDataset(root=join(params['root'], 'train_data'))
     data_loader = data.DataLoader(dset, batch_size=1, shuffle=True)
     return data_loader
 
@@ -41,22 +41,6 @@ def process_obs(o):
 # Runs a single element (no batch dimension) through a PyTorch model
 def run_single(model, *args):
     return model(*[a.unsqueeze(0) for a in args]).squeeze(0)
-
-def interpolate(z_start, z_end, alpha, args):
-    if args.interp_type == 'linear':
-        return (1 - alpha) * z_start + alpha * z_end
-    elif args.interp_type == 'slerp':
-        omega = (z_start * z_end).sum() / torch.norm(z_start) / torch.norm(z_end)
-        omega = torch.acos(torch.clamp(omega, -1, 1))
-        if omega.item() == 0:
-            return (1 - alpha) * z_start + alpha * z_end
-        a1 = torch.sin((1 - alpha) * omega) / torch.sin(omega)
-        a2 = torch.sin(alpha * omega) / torch.sin(omega)
-        return a1 * z_start + a2 * z_end
-    elif args.interp_type == 'end':
-        return z_end
-    else:
-        raise Exception('Invalid interp_type', args.interp_type)
 
 def segment_rope(image):
     return np.all(image > 150, axis=2)
@@ -326,7 +310,7 @@ def main(args):
                                                                                 args.n_actions, device, args)
 
     if id == 0:
-        prefix = f'[interp_type]_{args.interp_type}_[action_type]_{args.action_type}_[goal_type]_{args.goal_type}'
+        prefix = f'[action_type]_{args.action_type}_[goal_type]_{args.goal_type}'
         eval_folder = join(args.folder, 'eval', prefix)
         if not exists(eval_folder):
             os.makedirs(eval_folder)
@@ -337,7 +321,7 @@ def main(args):
         save_np_images(trajectories, join(eval_folder, f'traj_{prefix}.png'), nrow=args.n_actions + 2)
 
     save_args = vars(args)
-    save_args['script'] = 'evaluate_nce'
+    save_args['script'] = 'evaluate_planning'
     res.update(save_args)
     res.update(params)
 
@@ -364,13 +348,13 @@ if __name__ == '__main__':
     rtn_dicts = pool.map(main, list(zip([args_dict] * args.n_cpu, range(args.n_cpu))))
 
     results = rtn_dicts[0]
-    keys = ['xor', 'iou', 'geom', 'z_error']
+    keys = ['xor', 'iou', 'geom']
     for k in keys:
         vals = [r[k] for r in rtn_dicts]
         v = float(np.mean(vals))
         results[k] = v
 
-    prefix = f'[interp_type]_{args.interp_type}_[action_type]_{args.action_type}_[goal_type]_{args.goal_type}'
+    prefix = f'[action_type]_{args.action_type}_[goal_type]_{args.goal_type}'
     eval_folder = join(args.folder, 'eval', prefix)
     if not exists(eval_folder):
         os.makedirs(eval_folder)
