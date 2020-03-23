@@ -53,7 +53,7 @@ if __name__ == '__main__':
     folders = sys.argv[1:]
     exps = [dict(folder=folders, mode=[get_mode(f) for f in folders],
                  n_actions=[get_n_actions(f) for f in folders]),
-            dict(goal_type=['random', 'flat']), dict(n_trials=[500])]
+            dict(goal_type=['random', 'flat']), dict(n_trials=[1000])]
     exps = construct_variants(exps, name_key=None)
 
     chunk_size = math.ceil(len(exps) / n_gpus)

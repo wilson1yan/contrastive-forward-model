@@ -9,7 +9,6 @@ class Encoder(nn.Module):
     def __init__(self, z_dim, channel_dim):
         super().__init__()
 
-        self.squash = squash
         self.z_dim = z_dim
         self.model = nn.Sequential(
             nn.Conv2d(channel_dim, 64, 3, 1, 1),
@@ -50,7 +49,7 @@ class Transition(nn.Module):
                                          orthogonalize_mode=trans_type)
         else:
             raise Exception('Invalid trans_type:', trans_type)
-    
+
     def forward(self, z, a):
         return self.model(z, a)
 
