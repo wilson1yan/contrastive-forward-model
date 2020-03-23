@@ -6,7 +6,7 @@ import numpy as np
 
 roots = sys.argv[1:]
 for root in roots:
-    folders = glob.glob(join(root, '*', 'eval', '*'))
+    folders = glob.glob(join(root, 'eval', '*'))
     stats = dict()
     for folder in folders:
         with open(join(folder, 'eval_results.json')) as f:
