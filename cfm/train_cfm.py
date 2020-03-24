@@ -108,7 +108,7 @@ def main():
     writer = SummaryWriter(join(folder_name, 'data'))
 
     save_args = vars(args)
-    save_args['script'] = 'train_nce'
+    save_args['script'] = 'train_cfm'
     with open(join(folder_name, 'params.json'), 'w') as f:
         json.dump(save_args, f)
 
