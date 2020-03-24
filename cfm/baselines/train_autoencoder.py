@@ -6,6 +6,7 @@ from os.path import join, exists
 import numpy as np
 from tqdm import tqdm
 
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
@@ -87,7 +88,7 @@ def test(encoder, decoder, trans, test_loader, epoch, device):
     test_recon_loss /= len(test_loader.dataset)
     test_trans_loss /= len(test_loader.dataset)
     print(f'Epoch {epoch}, Test Loss: {test_loss:.4f}, Recon Loss: {test_recon_loss:.4f}, Trans Loss: {test_trans_loss:.4f}')
-    return test_loss
+    return test_loss.item()
 
 
 def main():

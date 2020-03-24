@@ -6,12 +6,13 @@ from os.path import join, exists
 import numpy as np
 from tqdm import tqdm
 
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
 import torch.optim as optim
 
-from dataset import DynamicsDataset
+from cfm.dataset import DynamicsDataset
 import cfm.models as cm
 import cfm.utils as cu
 
@@ -63,7 +64,7 @@ def test(trans, test_loader, epoch, device):
             test_loss += loss * obs.shape[0]
     test_loss /= len(test_loader.dataset)
     print(f'Epoch {epoch}, Test Loss: {test_loss:.4f}')
-    return test_loss
+    return test_loss.item()
 
 
 def main():

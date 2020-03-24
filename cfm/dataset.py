@@ -61,7 +61,7 @@ class PlanetDataset(data.Dataset):
 
         observations = []
         for t in range(self.chunk_size):
-            img_path = join(run_folder, f'img_{str(offset + t).zfill(4)}_000.png')
+            img_path = join(run_folder, f'img_{str(offset + t).zfill(2)}_000.png')
             observations.append(self._get_image(img_path))
         observations = np.stack(observations, axis=0)
 

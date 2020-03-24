@@ -4,7 +4,7 @@ import multiprocessing as mp
 import shlex
 import subprocess
 import os
-from cpc_util import construct_run_command, construct_variants
+from cfm.utils import construct_run_command, construct_variants
 
 
 def worker(gpu_id, max_per_gpu, exps):

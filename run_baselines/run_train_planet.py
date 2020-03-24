@@ -4,7 +4,7 @@ import multiprocessing as mp
 import shlex
 import subprocess
 import os
-from cpc_util import construct_run_command, construct_variants
+from cfm.utils import construct_run_command, construct_variants
 
 def worker(gpu_id, max_per_gpu, exps):
     env = os.environ.copy()
@@ -34,12 +34,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     exps = [{'root': ['data/rope'],
-             'state-size': [8], 'chunk-size': [10], 'overshooting-distance': [10]
+             'state-size': [8], 'chunk-size': [10], 'overshooting-distance': [10],
+             'overshooting-kl-beta': [0], 'global-kl-beta': [0], 'trans_type': ['mlp'],
+             'embedding-size': [512], 'hidden-size': [128]
             },
-            {'overshooting-kl-beta': [0]},
-            {'global-kl-beta': [0]},
-            {'trans_type': ['mlp']},
-            {'embedding-size': [512], 'hidden-size': [128]}]
+            {'seed': [0, 1, 2, 3]}]
 
     exps = construct_variants(exps, name_key='id')
 

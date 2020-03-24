@@ -6,12 +6,13 @@ from os.path import join, exists
 import numpy as np
 from tqdm import tqdm
 
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
 import torch.optim as optim
 
-from dataset import DynamicsDataset
+from cfm.dataset import DynamicsDataset
 import cfm.models as cm
 import cfm.utils as cu
 
@@ -72,7 +73,7 @@ def test(encoder, trans, inverse_model, test_loader, epoch, device):
     test_loss, test_trans_loss, test_inv_model_loss = 0, 0, 0
     for batch in test_loader:
         with torch.no_grad():
-            obs, obs_pos, actions, _ = [b.to(device) for b in batch]
+            obs, obs_pos, actions = [b.to(device) for b in batch]
             z, z_pos = encoder(obs), encoder(obs_pos)
             z_pred = trans(z, actions)
             action_pred = inverse_model(z, z_pos)
@@ -88,7 +89,7 @@ def test(encoder, trans, inverse_model, test_loader, epoch, device):
     test_trans_loss /= len(test_loader.dataset)
     test_inv_model_loss /= len(test_loader.dataset)
     print(f'Epoch {epoch}, Test Loss: {test_loss:.4f}, Trans Loss: {test_trans_loss:.4f}, Inv Model Loss: {test_inv_model_loss:.4f}')
-    return test_loss
+    return test_loss.item()
 
 
 def main():
