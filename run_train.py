@@ -13,6 +13,7 @@ def worker(gpu_id, max_per_gpu, exps):
 
     processes = []
     for exp in exps:
+        exp['name'] = 'cfm_' + exp['name']
         args = construct_run_command('cfm/train_cfm.py', exp)
         print('Running', args)
         args = shlex.split(args)
