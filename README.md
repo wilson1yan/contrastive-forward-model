@@ -19,3 +19,5 @@ There are two ways to visualize your results. If you group up your result folder
 
 If you are performing hyperparmeters tuning, it may be easier to run `python cfm/visualize/to_csv.py out`, which sill generate `progress.csv` and `params.json` files in each eval directory. Then, you can use the [rllab viskit](https://github.com/vitchyr/viskit) library to view: `python <path to viskit>/viskit/frontend.py out`, where you can split by different hyperparameters and average over seeds.
 
+## Baselines
+You can run the baselines by executing `python run_baselines/run_train_<baseline_name>.py` for step 3 instead of the CFM script. The rest of the steps are identical.
