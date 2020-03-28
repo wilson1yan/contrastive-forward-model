@@ -14,7 +14,7 @@ from torchvision import transforms
 
 from cfm.dataset import TrajectoryDataset
 from cfm.utils import save_np_images
-from rlpyt.envs.dm_control_env import DMControlEnv
+from cfm.env.dm_control_env import DMControlEnv
 from PIL import Image
 
 color_dim = None
