@@ -41,7 +41,7 @@ def compute_cpc_loss(obs, obs_pos, encoder, trans, actions, device):
     neg_dists = -((z_next ** 2).sum(1).unsqueeze(1) - 2* neg_dot_products + (z ** 2).sum(1).unsqueeze(0))
     idxs = np.arange(bs)
     # Set to minus infinity entries when comparing z with z - will be zero when apply softmax
-    neg_dists[idxs, idxs] = float('-inf') # b x b+1
+    neg_dists[idxs, idxs] = float('-inf') # b x b
 
     pos_dot_products = (z_pos * z_next).sum(dim=1) # b
     pos_dists = -((z_pos ** 2).sum(1) - 2* pos_dot_products + (z_next ** 2).sum(1))
