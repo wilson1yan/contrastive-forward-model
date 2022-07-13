@@ -1,3 +1,18 @@
+# Reproducing this in 2022
+
+Here are some tips to follow to sample trajectories:
+1. Recommendation: Make your own Conda environment
+2. The correct Mujoco version is Mujoco200, do not try to use the latest one. https://www.chenshiyu.top/blog/2019/06/19/Tutorial-Installation-and-Configuration-of-MuJoCo-Gym-Baselines/ can you help you out here, get the free license here http://www.roboti.us/license.html Fair warning: the new mujoco versions have a different provider now(DeepMind).
+3. Do *NOT* install dm_env via `pip install dm_env`, clone the repo and then run `pip install wherever/you/saved/dm_env`. These are two different packages. The same thing goes for dm_control. 
+4. Before you install either of these do install the requirements `pip install -r requirements.txt`, for all 3 packages respectively
+
+Other hickups that got into my way: 
+- undefined symbol: __glewBindBuffer found the solution here https://github.com/openai/mujoco-py/issues/549, terminal solution `sudo apt-get install libglfw3 libglew2.1` solved it for me
+- protobuf: https://stackoverflow.com/questions/72441758/typeerror-descriptors-cannot-not-be-created-directly
+
+It takes a lot of patience and frustration, but it's worth it.
+
+
 # Contrastive Forward Model
 
 This is code to reproduce experiments for the paper [Learning Predictive Representations for Deformable Objects Using Contrastive Estimation](https://arxiv.org/abs/2003.05436).
