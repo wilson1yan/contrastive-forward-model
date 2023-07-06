@@ -7,5 +7,5 @@ opencv_python==4.2.0.32
 numpy==1.18.1
 pandas==1.0.3
 Pillow==7.0.0
-scipy==1.4.1
+scipy==1.10.0
 tensorboard==2.2.0
